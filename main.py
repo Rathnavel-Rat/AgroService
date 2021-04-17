@@ -1,12 +1,9 @@
 from flask import Flask,render_template,request,Response,session,flash,redirect,url_for,flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
-import playsound 
 from flask import jsonify
 import re,os
 import json
-from werkzeug.utils import secure_filename
-from playsound import playsound
 app=Flask(__name__)
 app.config['MYSQL_HOST']="localhost"
 app.config['MYSQL_USER']="root"
