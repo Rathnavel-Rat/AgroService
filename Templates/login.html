@@ -19,24 +19,25 @@
     <link rel="shortcut icon" href="images/logo2.png" type="image/x-icon">
     <link rel="logo2" href="images/logo2.png">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Responsive CSS -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/custom.css">
 
-    <!--[if lt IE 9]>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='stylesheet.css')}}">
+    <link rel="stylesheet"  type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}"/>
+    <!-- Site CSS -->
+    <link rel="stylesheet"  type="text/css" href="{{ url_for('static', filename='style.css') }}" >
+    <!-- Responsive CSS -->
+    <link rel="stylesheet"  type="text/css" href="{{ url_for('static', filename='responsive.css') }}" >
+    <!-- Custom CSS -->
+    <link rel="stylesheet"  type="text/css" href="{{ url_for('static', filename='custom.css') }}" >
+
+     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
-    <form method="POST"action="home.html">
+    <form method="POST">
     <!-- Start Main Top -->
     <div class="main-top">
         <div class="container-fluid">
@@ -160,21 +161,21 @@
                                         <div class="help-block with-errors"></div>
                                     </div>-->
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12">{{msg}}
                                     <div class="form-group">
-                                        <input type="text" placeholder="Your Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
+                                        <input type="text" placeholder="Your Email" id="email" class="form-control" name="emailaddress" required data-error="Please enter your email">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="password" name="name" placeholder="Password" required data-error="Please enter your Subject">
+                                        <input type="text" class="form-control" id="password" name="password" placeholder="Password" required data-error="Please enter your Subject">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                                
                                     <div class="submit-button text-center">
-                                        <button class="btn hvr-hover" id="submit" type="submit"><a href="home.html"><b>Log In</a></button><br>
+                                        <button class="btn hvr-hover" id="submit" type="submit"><b>Log In</a></button><br>
                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
                                         <div class="clearfix"></div>
 
