@@ -3,8 +3,8 @@
 <!-- Basic -->
 
 <head>
+ {% include 'header.html' %}
 
-   {% include 'header.html' %}
 
 </head>
 
@@ -42,42 +42,29 @@
     <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
-     {% include "afterLogNav.html" %}
+        {% include 'afterLogNav.html' %}
+
+        <div>
+            {% for i in product %}
+                <div class="card">
+            <img src={{ url_for('static',filename='{i.image}') }}  style="width:100%">
+                    <h1>{i.productname}</h1>
+             <p class="price">{i.price}</p>
+
+            <p><button>Add to Cart</button></p>
+</div>
+            {% endfor %}
+        </div>
         <!-- End Navigation -->
     </header>
-    <!-- End Main Top -->
-
-   <div class="card">
-  <img src="jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
-  <p class="price">$19.99</p>
-  <p>Some text about the jeans..</p>
-  <p><button>Add to Cart</button></p>
-</div>
-
-    <!-- Start All Title Box -->
-    <div class="all-title-box">
-            
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2>Rent</h2>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Rent</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
+    <!-- End Shop Page -->
 
    
 
     <!-- Start Footer  -->
-     {% include 'ContacusFooter.html' %}
-
+    {% include 'ContacusFooter.html' %}
     <!-- End Footer  -->
 
     <!-- Start copyright  -->
@@ -88,8 +75,7 @@
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
-    <!-- ALL JS FILES -->
-    {% include 'footer.html' %}
+{% include 'footer.html' %}
 </body>
 
 </html>

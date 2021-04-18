@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request, Response, session, flash, redirect, url_for, flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
+from werkzeug.utils import secure_filename
 from flask import jsonify
 import re, os
 import json
 
 app = Flask(__name__)
-app.static_folder=os.path.join('static/')
+app.config['UPLOAD_FOLDER'] = 'static/upload/'
 app.config['MYSQL_HOST'] = "localhost"
 app.config['MYSQL_USER'] = "root"
 app.config['MYSQL_PASSWORD'] = ""
@@ -65,8 +66,6 @@ def register():
             msg = 'Invalid email address !'
         elif not re.match(r'[A-Za-z0-9]+', emailaddress):
             msg = 'Username must contain only characters and numbers !'
-        elif not emailaddress or not password:
-            msg = 'Please fill out the form !'
         else:
             cur = mysql.connection.cursor()
             cur.execute("INSERT INTO register (name,emailaddress,phoneno,password) VALUES (,%s,%s,%s,%s)",
@@ -102,9 +101,39 @@ def contactus():
     return render_template('contact-us.html')
 
 
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp3', 'wav'])
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/upload', methods=['POST', 'GET'])
+def upload():
+    if request.method == "POST":
+        msg = ''
+        file = request.files["file"]
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+        if file and allowed_file(file.filename):
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO product (id,productname,cost,image) VALUES (%s,%s,%s,%s)",
+                        (request.form["id"], request.form["productname"], request.form["cost"], file.filename))
+            mysql.connection.commit()
+            cur.close()
+            flash('File successfully uploaded ' + file.filename + ' to the database!')
+            return render_template("upload1.html", msg='successfully uploaded')
+        else:
+            flash('Invalid Uplaod only txt, pdf, png, jpg, jpeg, gif')
+    return render_template("upload1.html")
+
+
 @app.route("/Rent")
 def Rent():
-    return render_template('Rent.html')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM product')
+    products = cursor.fetchall()
+    return render_template('Rent.html',product=products)
+
 
 @app.route("/display/<filename>")
 def display_image(filename):
