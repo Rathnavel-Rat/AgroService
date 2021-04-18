@@ -100,6 +100,8 @@ def gallery():
 def contactus():
     return render_template('contact-us.html')
 
-
+@app.route("/Rent")
+def Rent():
+    return  render_template('Rent.html')
 if __name__ == '__main__':
     app.run(debug=True)
