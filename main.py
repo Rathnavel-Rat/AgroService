@@ -19,8 +19,7 @@ mysql = MySQL(app)
 @app.route('/home')
 @app.route('/')
 def home():
-
-    if  "loggedin" not in session:
+    if "loggedin" not in session:
         return render_template('home.html')
     return render_template('login.html')
 
@@ -101,8 +100,13 @@ def gallery():
 def contactus():
     return render_template('contact-us.html')
 
-@app.route("/Rent")
-def Rent():
-    return  render_template('Rent.html')
+
+@app.route("/display/<filename>")
+def display_image(filename):
+    h = 'image/gallery/' + filename
+    flash(h)
+    return redirect(url_for('static', filename=h), code=301)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
