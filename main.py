@@ -19,7 +19,8 @@ mysql = MySQL(app)
 @app.route('/home')
 @app.route('/')
 def home():
-    if session["loggedin"]:
+
+    if  "loggedin" not in session:
         return render_template('home.html')
     return render_template('login.html')
 
