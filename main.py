@@ -6,6 +6,7 @@ import re, os
 import json
 
 app = Flask(__name__)
+app.static_folder=os.path.join('static/')
 app.config['MYSQL_HOST'] = "localhost"
 app.config['MYSQL_USER'] = "root"
 app.config['MYSQL_PASSWORD'] = ""
@@ -100,6 +101,10 @@ def gallery():
 def contactus():
     return render_template('contact-us.html')
 
+
+@app.route("/Rent")
+def Rent():
+    return render_template('Rent.html')
 
 @app.route("/display/<filename>")
 def display_image(filename):
