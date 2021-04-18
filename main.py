@@ -105,7 +105,7 @@ def contactus():
 def display_image(filename):
     h = 'image/gallery/' + filename
     flash(h)
-    return redirect(url_for('static', filename=h), code=301)
+    return redirect(url_for('static', filename=h), code=304)
 
 
 if __name__ == '__main__':
