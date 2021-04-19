@@ -5,7 +5,7 @@
 <head>
  {% include 'header.html' %}
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -38,12 +38,13 @@
         </div>
     </div>
  <script>
-     var item={};
-     var total=0;
+     const item = {};
+     let total = 0;
+
      function add(id,cost){
            if(item[id]===undefined){
-             item[id]=0;
-             document.getElementById(id).innerHTML=eval(item[id])
+             item[id]=1;
+             document.getElementById(id).innerHTML=eval(item[id]);total+=cost;
          }
          else{
               item[id]=eval(item[id])+1;
@@ -59,9 +60,11 @@
              item[id]=0;
              document.getElementById(id).innerHTML=item[id]
 
+
          }
          if(item[id]-1===0){
             document.getElementById(id).innerHTML=0;
+             total-=cost;
          }
          else{
               item[id]=item[id]-1;
@@ -71,7 +74,18 @@
           document.getElementById("total").innerHTML=total.toString();
 
      }
-
+     function placeorder() {
+         console.log(item, total);
+         $.ajax({
+        type : "POST",
+        url : "/order",
+        data: JSON.stringify({order:item,total:total}),
+            contentType: 'application/json;charset=UTF-8',
+        success : function(data){
+            console.log("success");
+        }
+    });
+     }
  </script>
         <!-- Start Navigation -->
         {% include 'afterLogNav.html' %}
@@ -91,7 +105,7 @@
         {% endblock %}
         </div>
     <center><h1 id="total">0</h1></center>
-    <center><button>PLACE ORDER</button></center>
+    <center><button onclick="placeorder()">PLACE ORDER</button></center>
     <!-- End Shop Page -->
 
    
