@@ -21,8 +21,7 @@ mysql = MySQL(app)
 @app.route('/home')
 @app.route('/')
 def home():
-    if "loggedin" not in session:
-        return render_template('home.html')
+
     return render_template('login.html')
 
 
@@ -153,6 +152,11 @@ def order():
     jsony=json.loads(request.data)
     data=json.dumps(jsony['order'])
     total=jsony['total']
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO order (emailaddress,data,total) VALUES (,%s,%s,%s)",
+                (session['emailaddress'],data,total))
+    mysql.connection.commit()
+    cur.close()
     return  render_template('Rent.html')
 
 if __name__ == '__main__':
