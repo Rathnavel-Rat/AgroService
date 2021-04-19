@@ -1,8 +1,8 @@
 (function($) {
     "use strict";
-	
+
 	/* ..............................................
-	   Loader 
+	   Loader
 	   ................................................. */
 	$(window).on('load', function() {
 		$('.preloader').fadeOut();
@@ -211,6 +211,7 @@
 	$(".brand-box").niceScroll({
 		cursorcolor: "#9b9b9c",
 	});
-	
-	
+
+
 }(jQuery));
+

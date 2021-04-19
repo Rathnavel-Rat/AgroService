@@ -141,6 +141,12 @@ def display_image(filename):
     flash(h)
     return redirect(url_for('static', filename=h), code=304)
 
+@app.route("/Rent_display/<filename>")
+def Rent_Display(filename):
+    h = 'image/upload/' + "tract1.png"
+    flash(h)
+    return redirect(url_for('static', filename=h), code=304)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

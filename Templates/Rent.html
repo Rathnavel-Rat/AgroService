@@ -37,28 +37,61 @@
             </div>
         </div>
     </div>
-    <!-- End Main Top -->
+ <script>
+     var item={};
+     var total=0;
+     function add(id,cost){
+           if(item[id]===undefined){
+             item[id]=0;
+             document.getElementById(id).innerHTML=eval(item[id])
+         }
+         else{
+              item[id]=eval(item[id])+1;
+              document.getElementById(id).innerHTML=item[id]
+               total+=cost;
 
-    <!-- Start Main Top -->
-    <header class="main-header">
+         }
+           document.getElementById("total").innerHTML=total.toString();
+     }
+     function sub(id,cost){
+
+         if(item[id]===undefined){
+             item[id]=0;
+             document.getElementById(id).innerHTML=item[id]
+
+         }
+         if(item[id]-1===0){
+            document.getElementById(id).innerHTML=0;
+         }
+         else{
+              item[id]=item[id]-1;
+              document.getElementById(id).innerHTML=item[id]
+              total-=cost;
+         }
+          document.getElementById("total").innerHTML=total.toString();
+
+     }
+
+ </script>
         <!-- Start Navigation -->
         {% include 'afterLogNav.html' %}
 
         <div>
+        {% block product %}
             {% for i in product %}
                 <div class="card">
-            <img src={{ url_for('static',filename='{i.image}') }}  style="width:100%">
-                    <h1>{i.productname}</h1>
-             <p class="price">{i.price}</p>
 
-            <p><button>Add to Cart</button></p>
-</div>
+            <img src={{ url_for('static',filename="upload/"+i.image) }} style="width:200px;height:100px" alt="sds">
+                    <h1>{{  i.productname}}</h1>
+             <p class="price">{{i.cost}}</p>
+              <span id={{ i.id }}>0</span>
+            <p><button onclick="add({{ i.id }},{{ i.cost }})">+</button><button  onclick="sub({{ i.id }},{{ i.cost }})">-</button></p>
+           </div>
             {% endfor %}
+        {% endblock %}
         </div>
-        <!-- End Navigation -->
-    </header>
-
-
+    <center><h1 id="total">0</h1></center>
+    <center><button>PLACE ORDER</button></center>
     <!-- End Shop Page -->
 
    
@@ -73,7 +106,7 @@
     </div>
     <!-- End copyright  -->
 
-    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
 
 {% include 'footer.html' %}
 </body>
