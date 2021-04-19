@@ -18,10 +18,8 @@ app.config['secret_key'] = "dhfebfhuiu34h3u7rh387fh8723h7hr83h27h8"
 mysql = MySQL(app)
 
 
-@app.route('/home')
 @app.route('/')
 def home():
-
     return render_template('login.html')
 
 
@@ -78,6 +76,7 @@ def register():
     return render_template('register.html', msg=msg)
 
 
+@app.route("/logout/", methods=['POST', 'GET'])
 @app.route("/logout")
 def logout():
     session['loggedin'] = False
@@ -131,7 +130,7 @@ def Rent():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM product')
     products = cursor.fetchall()
-    return render_template('Rent.html',product=products)
+    return render_template('Rent.html', product=products)
 
 
 @app.route("/display/<filename>")
@@ -140,24 +139,26 @@ def display_image(filename):
     flash(h)
     return redirect(url_for('static', filename=h), code=304)
 
+
 @app.route("/Rent_display/<filename>")
 def Rent_Display(filename):
     h = 'image/upload/' + "tract1.png"
     flash(h)
     return redirect(url_for('static', filename=h), code=304)
 
+
 @app.route('/order/', methods=['GET', 'POST'])
 @app.route('/order', methods=['GET', 'POST'])
 def order():
-    jsony=json.loads(request.data)
-    data=json.dumps(jsony['order'])
-    total=jsony['total']
+    jsony = json.loads(request.data)
+    data = json.dumps(jsony['order'])
+    total = jsony['total']
     cur = mysql.connection.cursor()
     cur.execute("INSERT INTO order (emailaddress,data,total) VALUES (,%s,%s,%s)",
-                (session['emailaddress'],data,total))
+                (session['emailaddress'], data, total))
     mysql.connection.commit()
     cur.close()
-    return  render_template('Rent.html')
+    return render_template('Rent.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
