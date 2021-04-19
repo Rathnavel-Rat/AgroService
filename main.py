@@ -153,8 +153,12 @@ def order():
     jsony = json.loads(request.data)
     data = json.dumps(jsony['order'])
     total = jsony['total']
+    cur = mysql.connection.cursor()
+    cur.execute("INSERT INTO order (emailaddress,data,total) VALUES (,%s,%s,%s)",
+                (session['emailaddress'], data, total))
+    mysql.connection.commit()
+    cur.close()
     return render_template('Rent.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
