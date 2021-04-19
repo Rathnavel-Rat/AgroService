@@ -147,6 +147,13 @@ def Rent_Display(filename):
     flash(h)
     return redirect(url_for('static', filename=h), code=304)
 
+@app.route('/order/', methods=['GET', 'POST'])
+@app.route('/order', methods=['GET', 'POST'])
+def order():
+    jsony=json.loads(request.data)
+    data=json.dumps(jsony['order'])
+    total=jsony['total']
+    return  render_template('Rent.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
