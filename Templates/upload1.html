@@ -1,235 +1,153 @@
-<html>
-    <body><form method="POST" action="/upload" enctype="multipart/form-data">
-  <h1><strong>File upload</strong></h1>
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
 
-<center>
-{{ msg }}</center>
-  <div class="form-group">
-    <label for="title">ID </label>
-    <input type="text" name="id" id="id" class="form-controll"/>
-  </div>
-  <div class="form-group">
-    <label for="caption">PRODUCT NAME </label>
-    <input type="text" name="productname" id="productname" class="form-controll"/>
-  </div>
+{% include "header.html" %}
 
-  <div class="form-group">
-    <label for="caption">COST</label>
-    <input type="text" name="cost" id="cost" class="form-controll"/>
-  </div>
-
-  <div class="form-group file-area">
-        <label for="Files">Files </label>
-    <input type="file" name="file" id="file">
+<body>
+    <form method="POST" enctype="multipart/form-data">
+    <!-- Start Main Top -->
+    <div class="main-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    
+                    <div class="right-phone-box">
+                        <p>Call Us : <a href="#"> +91 9488442555</a></p>
+                    </div>
+                    
+                </div>
+                
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+    <!-- End Main Top -->
 
-  <div class="form-group">
-    <input type="submit" name="upload" >
-  </div>
+    <!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                    <a class="navbar-brand" ><img href="{{url_for('static',filename='image/logo2.png')}}" class="logo2" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
 
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <!--<li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>-->
+                        <li class="nav-item"><a class="nav-link" href="register.html">New Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about us.html">About Us</a></li>
+                    </ul>
+                </div>
+        </nav>
+        <!-- End Navigation -->
+    </header>
+    <!-- End Main Top -->
+
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>UPLOADING FORM</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    
+                <div class="contact-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-sm-12">
+                    <div class="contact-form-right">
+                        <form method="POST">
+                            <div class="row">
+                                <div class="col-md-12">
+                                      <div class="form-group">
+                                        <h2> File Upload </h2>
+                                        {{ msg }}
+                                        <br>
+                                        <br>
+                                        <label for="title">ID </label>
+                                        <input type="text" placeholder="Your Id" id="id" class="form-control" name="id" required data-error="Please enter your ID">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="caption">PRODUCT NAME </label>
+                                        <input type="text" class="form-control" id="productname" name="productname" placeholder="Your Product Name" required data-error="Please enter your Product Name">
+                                        <div class="help-block with-errors"></div>
+                                            </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="caption">COST</label>
+                                        <input type="text" class="form-control" id="cost" name="cost" placeholder="Cost" required data-error="Please enter your Product Cost">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                 <div class="col-md-12">
+                                    <div class="submit-button text-center">
+                                        <input id="file" type="file" name="file">
+                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <br>
+                                    <div class="submit-button text-center">
+                                        <button class="btn hvr-hover" id="submit" type="submit">SUBMIT</button>
+                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                    </div>
+
+                                </div>
+
+                            </diV>
+                        
+                        </form>
+
+                    </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <!-- End Cart -->
+
+    <!-- Start Instagram Feed  -->
+    
+    </div>
+    <!-- End Instagram Feed  -->
+
+
+    <!-- Start Footer  -->
+     {% include 'ContacusFooter.html' %}
+    <!-- End Footer  -->
+
+    <!-- Start copyright  -->
+    <div class="footer-copyright">
+        <p class="footer-company">All Rights Reserved. &copy; 2021 <a href="#">Agro Services</a> 
+    </div>
+    <!-- End copyright  -->
+
+    <!-- ALL JS FILES -->
+{% include 'footer.html' %}
 </form>
-    </body>
+</body>
 
-
-
-
-<style>
-<link href='https://fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700' rel='stylesheet' type='text/css'>
-
-<a href="http://scribblerockerz.com/drag-n-drop-file-input-without-javascript/" class="back-to-article" target="_blank">back to Article</a>
-@import "compass/css3";
-
-/* ===================== FILE INPUT ===================== */
-.file-area {
-  width: 100%;
-  position: relative;
-
-  input[type=file] {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
-
-  .file-dummy {
-    width: 100%;
-    padding: 30px;
-    background: rgba(255,255,255,0.2);
-    border: 2px dashed rgba(255,255,255,0.2);
-    text-align: center;
-    transition: background 0.3s ease-in-out;
-
-    .success {
-      display: none;
-    }
-  }
-
-  &:hover .file-dummy {
-    background: rgba(255,255,255,0.1);
-  }
-
-  input[type=file]:focus + .file-dummy {
-    outline: 2px solid rgba(255,255,255,0.5);
-    outline: -webkit-focus-ring-color auto 5px;
-  }
-
-  input[type=file]:valid + .file-dummy {
-    border-color: rgba(0,255,0,0.4);
-    background-color: rgba(0,255,0,0.3);
-
-    .success {
-      display: inline-block;
-    }
-    .default {
-      display: none;
-    }
-  }
-}
-
-
-
-
-    .img{
-      height:52px;
-      width:52px;
-      clip-path:circle();
-    }
-    .logos
-    {
-      position: absolute;
-      top: 17px;
-      right: 250px;
-
-    }
-    .users
-    {
-        width: 1280px;
-        height: 55px;
-        margin-left: 1020px;
-    }
-
-
-
-
-
-/* ===================== BASIC STYLING ===================== */
-
-* {
-  box-sizing: border-box;
-  font-family: 'Lato', sans-serif;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  font-weight: 300;
-  height: 100%;
-  background: #053777;
-  color: #fff;
-  font-size: 16px;
-  overflow: hidden;
-  background: -moz-linear-gradient(top, #053777 0%, #00659b 100%);
-  /* FF3.6+ */
-
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #053777), color-stop(100%, #00659b));
-  /* Chrome,Safari4+ */
-
-  background: -webkit-linear-gradient(top, #053777 0%, #00659b 100%);
-  /* Chrome10+,Safari5.1+ */
-
-  background: -o-linear-gradient(top, #053777 0%, #00659b 100%);
-  /* Opera 11.10+ */
-
-  background: -ms-linear-gradient(top, #053777 0%, #00659b 100%);
-  /* IE10+ */
-
-  background: linear-gradient(to bottom, #053777 0%, #00659b 100%);
-  /* W3C */
-
-}
-
-h1 {
-  text-align: center;
-  margin: 50px auto;
-  font-weight: 100;
-}
-
-label {
-  font-weight: 500;
-  display: block;
-  margin: 4px 0;
-  text-transform: uppercase;
-  font-size: 13px;
-  overflow: hidden;
-
-  span {
-    float: right;
-    text-transform: none;
-    font-weight: 200;
-    line-height: 1em;
-    font-style: italic;
-    opacity: 0.8;
-  }
-}
-
-.form-controll {
-  display: block;
-  padding: 8px 16px;
-  width: 100%;
-  font-size: 16px;
-  background-color: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-  font-weight: 200;
-
-  &:focus {
-    outline: 2px solid rgba(255,255,255,0.5);
-    outline: -webkit-focus-ring-color auto 5px;
-  }
-}
-
-button {
-  padding: 8px 30px;
-  background: rgba(255,255,255,0.8);
-  color: #053777;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 11px;
-  border: 0;
-  text-shadow: 0 1px 2px #fff;
-  cursor: pointer;
-}
-
-.form-group {
-  max-width: 500px;
-  margin: auto;
-  margin-bottom: 30px;
-}
-
-.back-to-article {
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 12px;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  text-decoration: none;
-  display: inline-block;
-  background: rgba(0,0,0,0.6);
-  padding: 10px 18px;
-  transition: all 0.3s ease-in-out;
-  opacity: 0.6;
-
-  &:hover {
-    opacity: 1;
-    background: rgba(0,0,0,0.8);
-  }
-}
-</style>
+</html>

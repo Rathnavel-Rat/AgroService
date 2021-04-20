@@ -25,23 +25,24 @@ def home():
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    if session["loggedin"]:
-        return render_template('home.html')
-    msg = ''
-    if request.method == 'POST':
-        emailaddress = request.form['emailaddress']
-        password = request.form['password']
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM register WHERE emailaddress = % s AND password = % s', (emailaddress, password))
-        register = cursor.fetchone()
-
-        if register:
-            session['loggedin'] = True
-            session['emailaddress'] = register["emailaddress"]
+        if 'loggedin' in session and session['loggedin']:
             return render_template('home.html')
-        else:
-            msg = 'Incorrect emailaddress / password !'
-            return render_template('login.html', msg=msg)
+        msg = ''
+        if request.method == 'POST':
+            emailaddress = request.form['emailaddress']
+            password = request.form['password']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM register WHERE emailaddress = % s AND password = % s',
+                           (emailaddress, password))
+            register = cursor.fetchone()
+
+            if register:
+                session['loggedin'] = True
+                session['emailaddress'] = register["emailaddress"]
+                return render_template('home.html')
+            else:
+                msg = 'Incorrect emailaddress / password !'
+                return render_template('login.html', msg=msg)
 
 
 @app.route('/register', methods=['POST', 'GET'])
@@ -70,7 +71,7 @@ def register():
             mysql.connection.commit()
             cur.close()
             msg = 'You have successfully registered !'
-            return render_template('login.html', msg=msg)
+            return render_template('login.html', msg=msg, ms=session['emailaddress'])
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('register.html', msg=msg)
@@ -149,16 +150,35 @@ def Rent_Display(filename):
 
 @app.route('/order/', methods=['GET', 'POST'])
 @app.route('/order', methods=['GET', 'POST'])
-def order():
+def orders():
     jsony = json.loads(request.data)
-    data = json.dumps(jsony['order'])
-    total = jsony['total']
+    data_ = jsony['order']
+    total_ = jsony['total']
+
     cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO order (emailaddress,data,total) VALUES (,%s,%s,%s)",
-                (session['emailaddress'], data, total))
+    mail = session['emailaddress']
+    cur.execute("INSERT INTO orderdet (emailaddress,data,total,date) VALUES (%s,%s,%s,now())", (mail, data_, str(total_)))
     mysql.connection.commit()
     cur.close()
     return render_template('Rent.html')
 
+@app.route("/placedorders",)
+def placedorders():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute('SELECT * FROM orderdet WHERE emailaddress=%s',[session['emailaddress']])
+    orders= cur.fetchall()
+    print(orders)
+    cur.close()
+    return render_template('placedorders.html', date=orders)
+@app.route("/orderitems/<date>")
+def orderitems(date):
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cur.execute('SELECT * FROM orderdet WHERE emailaddress=%s AND date=%s', ([session['emailaddress']],[date]))
+    orders = cur.fetchall()
+    cur.execute("select * from product ")
+    product=cur.fetchall()
+    print(orders, product)
+    cur.close()
+    return  render_template('ordereditems.html',product=product,orders=orders)
 if __name__ == '__main__':
     app.run(debug=True)
