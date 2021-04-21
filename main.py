@@ -77,6 +77,66 @@ def register():
     return render_template('register.html', msg=msg)
 
 
+@app.route('/admin/')
+def adhome():
+    return render_template('adminlog.html')
+
+
+@app.route('/admin/', methods=['GET', 'POST'])
+def adlogin():
+        if 'loggedin' in session and session['loggedin']:
+            return render_template('main.html')
+        msg = ''
+        if request.method == 'POST':
+            emailaddress = request.form['emailaddress']
+            password = request.form['password']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM adregister WHERE emailaddress = % s AND password = % s',
+                           (emailaddress, password))
+            register = cursor.fetchone()
+
+            if register:
+                session['loggedin'] = True
+                session['emailaddress'] = register["emailaddress"]
+                return render_template('main.html')
+            else:
+                msg = 'Incorrect emailaddress / password !'
+                return render_template('adminlog.html', msg=msg)
+
+
+@app.route('/adminregister', methods=['POST', 'GET'])
+def adregister():
+    if session["loggedin"]:
+        return render_template('main.html')
+    msg = ''
+    if request.method == 'POST' and 'password' in request.form and 'emailaddress' in request.form:
+        firstname = request.form['name']
+        emailaddress = request.form['emailaddress']
+        phoneno = request.form['phoneno']
+        password = request.form['password']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM adregister WHERE emailaddress = % s AND password = % s', (emailaddress, password))
+        registers = cursor.fetchone()
+        if registers:
+            msg = 'Account already exists !'
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', emailaddress):
+            msg = 'Invalid email address !'
+        elif not re.match(r'[A-Za-z0-9]+', emailaddress):
+            msg = 'Username must contain only characters and numbers !'
+        else:
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO adregister (name,emailaddress,phoneno,password) VALUES (,%s,%s,%s,%s)",
+                        (firstname, emailaddress, phoneno, password))
+            mysql.connection.commit()
+            cur.close()
+            msg = 'You have successfully registered !'
+            return render_template('adminlog.html', msg=msg, ms=session['emailaddress'])
+    elif request.method == 'POST':
+        msg = 'Please fill out the form !'
+    return render_template('adminregister.html', msg=msg)
+
+
+
 @app.route("/logout/", methods=['POST', 'GET'])
 @app.route("/logout")
 def logout():

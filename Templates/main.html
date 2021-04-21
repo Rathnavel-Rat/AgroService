@@ -11,13 +11,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    
+
                     <div class="right-phone-box">
                         <p>Call Us : <a href="#"> +91 9488442555</a></p>
                     </div>
-                    
+
                 </div>
-                
+
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         <!--<li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>-->
-                        <li class="nav-item"><a class="nav-link" href={{ url_for('register') }}>New Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="register.html">New Register</a></li>
                         <li class="nav-item"><a class="nav-link" href="about us.html">About Us</a></li>
                     </ul>
                 </div>
@@ -63,7 +63,7 @@
     </div>
     <!-- End All Title Box -->
 
-    
+
                 <div class="contact-box-main">
         <div class="container">
             <div class="row">
@@ -81,24 +81,24 @@
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="password"></label><input type="text" class="form-control" id="password" name="password" placeholder="Password" >
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
-                               
-                                    <div class="submit-button text-center">
-                                        <button class="btn hvr-hover" id="submit" type="submit">Log In</a></button><br>
+
+                                    <div class="submit-button text-center"><a href="{{url_for('upload')}}">
+                                        <button class="btn hvr-hover" id="submit" type="submit">UPLOAD</button></a><br>
                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
                                         <div class="clearfix"></div>
 
                                     </div>
 
+                                    <div class="submit-button text-center"><a href="{{url_for('Rent')}}">
+                                        <button class="btn hvr-hover" id="submit" type="submit">Rent</button></a><br>
+                                       <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                        <div class="clearfix"></div>
+
+                                    </div>
                                 </div>
 
                             </diV>
-                        
+
                         </form>
 
                     </div>
@@ -107,14 +107,14 @@
             </div>
 
 
-</form>
+
         </div>
-              <center><a href="{{url_for('register')}}" <b> New Registration</b></center>
+              <center><button><b> New Registration</b></button></center>
     </div>
     <!-- End Cart -->
 
     <!-- Start Instagram Feed  -->
-    
+
     </div>
     <!-- End Instagram Feed  -->
 
@@ -125,13 +125,13 @@
 
     <!-- Start copyright  -->
     <div class="footer-copyright">
-        <p class="footer-company">All Rights Reserved. &copy; 2021 <a href="#">Agro Services</a> 
+        <p class="footer-company">All Rights Reserved. &copy; 2021 <a href="#">Agro Services</a>
     </div>
     <!-- End copyright  -->
 
     <!-- ALL JS FILES -->
 {% include 'footer.html' %}
-
+</form>
 </body>
 
 </html>
