@@ -15,10 +15,30 @@
                     <div class="right-phone-box">
                         <p>Call Us : <a href="#"> +91 9488442555</a></p>
                     </div>
-                    
                 </div>
+                 <div class="logos"><img src="{{url_for('static', filename='image/user.png')}}" class="img" /></div>
+                 <div class="msg">{{ msg }}<style>.msg {
+                     margin-left: 430px;
+                     font-size: 20px;
+                     color: white;
+                 }
+
+  .img{
+    height:52px;
+    width:52px;
+    clip-path:circle();
+  }
+                     .logos
+  {
+    position: absolute;
+    top: 2px;
+    right: 250px;
+
+  }
+    }</style></div>
                 
                 </div>
+
             </div>
         </div>
     </div>
@@ -74,7 +94,11 @@
                                 <div class="col-md-12">
                                       <div class="form-group">
                                         <h2> File Upload </h2>
-                                        {{ msg }}
+                                        <div class="flashes">
+  {% for ms in get_flashed_messages()%}
+    <center>'&nbsp'{{ ms }}&nbsp;
+  {% endfor %}
+</div>
                                         <br>
                                         <br>
                                         <label for="title">ID </label>

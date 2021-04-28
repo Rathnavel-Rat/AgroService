@@ -19,14 +19,15 @@ mysql = MySQL(app)
 
 
 @app.route('/')
-def home():
+def log():
     return render_template('login.html')
-
-
+@app.route('/home')
+def home():
+    return render_template('home.html',msg=session['emailaddress'])
 @app.route('/', methods=['GET', 'POST'])
 def login():
         if 'loggedin' in session and session['loggedin']:
-            return render_template('home.html')
+            return redirect(url_for('home'))
         msg = ''
         if request.method == 'POST':
             emailaddress = request.form['emailaddress']
@@ -39,16 +40,15 @@ def login():
             if register:
                 session['loggedin'] = True
                 session['emailaddress'] = register["emailaddress"]
-                return render_template('home.html')
+                return redirect(url_for('home'))
             else:
                 msg = 'Incorrect emailaddress / password !'
                 return render_template('login.html', msg=msg)
 
-
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if session["loggedin"]:
-        return render_template('home.html')
+        return redirect(url_for('home'))
     msg = ''
     if request.method == 'POST' and 'password' in request.form and 'emailaddress' in request.form:
         firstname = request.form['name']
@@ -62,16 +62,14 @@ def register():
             msg = 'Account already exists !'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', emailaddress):
             msg = 'Invalid email address !'
-        elif not re.match(r'[A-Za-z0-9]+', emailaddress):
-            msg = 'Username must contain only characters and numbers !'
         else:
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO register (name,emailaddress,phoneno,password) VALUES (,%s,%s,%s,%s)",
+            cur.execute("INSERT INTO register (name,emailaddress,phoneno,password) VALUES (%s,%s,%s,%s)",
                         (firstname, emailaddress, phoneno, password))
             mysql.connection.commit()
             cur.close()
             msg = 'You have successfully registered !'
-            return render_template('login.html', msg=msg, ms=session['emailaddress'])
+            return redirect(url_for('login'))
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('register.html', msg=msg)
@@ -85,9 +83,9 @@ def adhome():
 @app.route('/admin/', methods=['GET', 'POST'])
 def adlogin():
         if 'loggedin' in session and session['loggedin']:
-            return render_template('main.html')
-        msg = ''
+            return redirect(url_for('adminmain'))
         if request.method == 'POST':
+            msg=''
             emailaddress = request.form['emailaddress']
             password = request.form['password']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -98,19 +96,21 @@ def adlogin():
             if register:
                 session['loggedin'] = True
                 session['emailaddress'] = register["emailaddress"]
-                return render_template('main.html')
+                return redirect(url_for('adminmain'))
             else:
                 msg = 'Incorrect emailaddress / password !'
                 return render_template('adminlog.html', msg=msg)
-
+@app.route("/adminmain")
+def adminmain():
+    return render_template('main.html',msg=session['emailaddress'])
 
 @app.route('/adminregister', methods=['POST', 'GET'])
 def adregister():
-    if session["loggedin"]:
-        return render_template('main.html')
-    msg = ''
+    if 'loggedin' in session and session['loggedin']:
+       return redirect(url_for('adminmain'))
+
     if request.method == 'POST' and 'password' in request.form and 'emailaddress' in request.form:
-        firstname = request.form['name']
+        firstname = request.form['firstname']
         emailaddress = request.form['emailaddress']
         phoneno = request.form['phoneno']
         password = request.form['password']
@@ -125,39 +125,37 @@ def adregister():
             msg = 'Username must contain only characters and numbers !'
         else:
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO adregister (name,emailaddress,phoneno,password) VALUES (,%s,%s,%s,%s)",
+            cur.execute("INSERT INTO adregister (name,emailaddress,phoneno,password) VALUES (%s,%s,%s,%s)",
                         (firstname, emailaddress, phoneno, password))
             mysql.connection.commit()
             cur.close()
-            msg = 'You have successfully registered !'
-            return render_template('adminlog.html', msg=msg, ms=session['emailaddress'])
+            return redirect('/admin/' )
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
-    return render_template('adminregister.html', msg=msg)
+    return render_template('adminregister.html')
 
 
 
-@app.route("/logout/", methods=['POST', 'GET'])
 @app.route("/logout")
 def logout():
     session['loggedin'] = False
     session['emailaddress'] = ""
-    return render_template('login.html')
+    return redirect(url_for('login'))
 
 
 @app.route("/aboutus")
 def aboutus():
-    return render_template('about.html')
+    return render_template('about.html',msg=session['emailaddress'])
 
 
 @app.route("/galllery")
 def gallery():
-    return render_template('gallery.html')
+    return render_template('products.html',msg=session['emailaddress'])
 
 
 @app.route("/contactus")
 def contactus():
-    return render_template('contact-us.html')
+    return render_template('contact-us.html',msg=session['emailaddress'])
 
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp3', 'wav'])
@@ -166,7 +164,7 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp3', 'wav
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
+@app.route('/upload/')
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
     if request.method == "POST":
@@ -179,11 +177,13 @@ def upload():
                         (request.form["id"], request.form["productname"], request.form["cost"], file.filename))
             mysql.connection.commit()
             cur.close()
-            flash('File successfully uploaded ' + file.filename + ' to the database!')
-            return render_template("upload1.html", msg='successfully uploaded')
+            ms='File successfully uploaded'
+            flash((ms) + file.filename + ' to the database!')
+            return render_template("upload1.html", msg=session['emailaddress'])
         else:
-            flash('Invalid Uplaod only txt, pdf, png, jpg, jpeg, gif')
-    return render_template("upload1.html")
+            ms = 'Invalid Uplaod only txt, pdf, png, jpg, jpeg, gif'
+            flash(ms)
+    return render_template("upload1.html",msg=session['emailaddress'])
 
 
 @app.route("/Rent")
@@ -191,7 +191,7 @@ def Rent():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM product')
     products = cursor.fetchall()
-    return render_template('Rent.html', product=products)
+    return render_template('Rent.html', product=products,msg=session['emailaddress'])
 
 
 @app.route("/display/<filename>")
@@ -212,12 +212,13 @@ def Rent_Display(filename):
 @app.route('/order', methods=['GET', 'POST'])
 def orders():
     jsony = json.loads(request.data)
-    data_ = jsony['order']
+    data_ = json.dumps(jsony['order'])
+    print(data_)
     total_ = jsony['total']
 
     cur = mysql.connection.cursor()
     mail = session['emailaddress']
-    cur.execute("INSERT INTO orderdet (emailaddress,data,total,date) VALUES (%s,%s,%s,now())", (mail, data_, str(total_)))
+    cur.execute("INSERT INTO orderdet (emailaddress,data,total) VALUES (%s,%s,%s)", (mail, data_, str(total_)))
     mysql.connection.commit()
     cur.close()
     return render_template('Rent.html')
@@ -227,18 +228,19 @@ def placedorders():
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cur.execute('SELECT * FROM orderdet WHERE emailaddress=%s',[session['emailaddress']])
     orders= cur.fetchall()
-    print(orders)
     cur.close()
-    return render_template('placedorders.html', date=orders)
+    return render_template('placedorders.html', date=orders,msg=session['emailaddress'])
 @app.route("/orderitems/<date>")
 def orderitems(date):
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cur.execute('SELECT * FROM orderdet WHERE emailaddress=%s AND date=%s', ([session['emailaddress']],[date]))
-    orders = cur.fetchall()
+    orders = cur.fetchone()
+    ordereditem=json.dumps(json.loads(orders["data"]))
+
     cur.execute("select * from product ")
     product=cur.fetchall()
-    print(orders, product)
     cur.close()
-    return  render_template('ordereditems.html',product=product,orders=orders)
+
+    return  render_template('ordereditems.html',product=json.dumps(product),orders=orders,data=ordereditem,msg=session['emailaddress'])
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+
+<head>
+ {% include 'header.html' %}
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- Start Main Top -->
+    <div class="main-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					<!--<div class="custom-select-box">
+                        <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+							<option>¥ JPY</option>
+							<option>$ USD</option>
+							<option>€ EUR</option>
+						</select>
+                    </div>-->
+                    <div class="right-phone-box">
+                        <p>Call Us : <a href="#"> +91 9488442555</a></p>
+                    </div>
+
+
+                </div>
+                <div class="logos"><img src="{{url_for('static', filename='image/user.png')}}" class="img" /></div>
+                 <div class="msg">{{ msg }}<style>.msg {
+                     margin-left: 430px;
+                     font-size: 20px;
+                     color: white;
+                 }
+
+  .img{
+    height:52px;
+    width:52px;
+    clip-path:circle();
+  }
+                     .logos
+  {
+    position: absolute;
+    top: 3px;
+    right: 250px;
+
+  }
+    }</style></div>
+            </div>
+</div>
+        </div>
+    </div>
+     <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                    <a class="navbar-brand" ><img src ="{{url_for('static',filename='image/logo2.png')}}" class="logo2" alt=""/></a>
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                       <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('Rent') }}">Rent</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('contactus') }}">Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('aboutus') }}">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Log Out</a></li>
+                  </ul>
+                </div>
+        </nav>
+        <!-- End Navigation -->
+    </header><div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Product Detail</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+
+                <div class="col-xl-7 col-lg-7 col-md-6">
+                    <div class="single-product-details">
+                        <h2>Excort Euro50</h2>
+
+        <img src="{{url_for('static',filename='image/tract3.png')}}" class="img-fluid" alt="Image">
+
+						<h4>Short Description:</h4>
+						<p>It has HP50,more powerfull engine to perform heavy duty easily.<br>
+                        latest technology.<br>
+                    Diesel saver<br>Mostly used for ploughs,rotators,etc...</p>
+
+						</div>
+                    </div>
+                    <div class="col-xl-7 col-lg-7 col-md-6">
+                    <div class="single-product-details">
+                        <h2>Massey Ferguson</h2>
+                      <img src="{{url_for('static',filename='image/tract4.jpeg')}}" class="img-fluid" alt="Image">
+
+                        <h4>Short Description:</h4>
+                        <p>Low power engine.<br>Mainly used with trailor and tanker</p>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-7 col-lg-7 col-md-6">
+                    <div class="single-product-details">
+                        <h2>Rotator</h2>
+                         <img src="{{url_for('static',filename='image/plough3.png')}}" class="img-fluid" alt="Image">
+                        <h4>Short Description:</h4>
+                        <p>Its a machine used to make a hard soil to dusty.<br>Used to clean a grass area.  </p>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-7 col-lg-7 col-md-6">
+                    <div class="single-product-details">
+                        <h2>John Deere</h2>
+                       <img src="{{url_for('static',filename='image/h1.jpg')}}" class="img-fluid" alt="Image">
+                        <h4>Short Description:</h4>
+                        <p>Harvestor machine used for Rice,Maize,Wheat,etc...<br>
+                        Cost is little High.</p>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-7 col-lg-7 col-md-6">
+                    <div class="single-product-details">
+                        <h2>Hydralic Disc</h2>
+                      <img src="{{url_for('static',filename='image/plou/plough1.jpeg')}}" class="img-fluid" alt="Image">
+
+                        <h4>Short Description:</h4>
+                        <p>For long space and Fast ploughing .<br> Work make it easy. </p>
+
+                        </div>
+                    </div>
+                     <div class="col-xl-7 col-lg-7 col-md-6">
+                    <div class="single-product-details">
+                        <h2>Trailor</h2>
+                       <img src="{{url_for('static',filename='image/carr/carrier1.jpeg')}}" class="img-fluid" alt="Image">
+
+                        <h4>Short Description:</h4>
+                        <p>For carrier of seed and fertilizer load.</p>
+
+                        </div>
+                    </div>
+                <style>
+                    .img-fluid
+                    {
+                        width: 300px;
+                    }
+                    .single-product-details
+                    {
+                        margin-left: 50px;
+                    }
+                </style>
+                </div>
+            </div>
+    <!-- End Gallery  -->
+
+
+
+    <!-- Start Footer  -->
+       {% include 'ContacusFooter.html' %}
+    <!-- End Footer  -->
+
+    <!-- Start copyright  -->
+    <div class="footer-copyright">
+        <p class="footer-company"><b>All Rights Reserved. &copy; 2021 <a href="#">Agro Services</a>
+    </div>
+    <!-- End copyright  -->
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+    <!-- ALL JS FILES -->
+    {% include "footer.html" %}
+
+</body>
+</html>
