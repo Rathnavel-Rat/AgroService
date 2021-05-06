@@ -52,8 +52,32 @@
     <!-- Start Main Top -->
     <header class="main-header">  
         <!-- Start Navigation -->
-      {% include "afterLogNav.html" %}
-        <!-- End Navigation -->
+
+        <!-- Start Navigation -->
+       <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                    <a class="navbar-brand" ><img src ="{{url_for('static',filename='image/logo2.png')}}" class="logo2" alt=""/></a>
+                </div>
+                <!-- End Header Navigation -->
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                       <li class="nav-item active"><a class="nav-link" href="{{url_for('home')}}">Home</a></li>
+                        <li class="nav-item "><a class="nav-link" href="{{url_for('gallery')}}">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('Rent')}}">Rent </a></li>
+                        <li class="nav-item "><a class="nav-link" href="{{url_for('placedorders')}}">Your Orders</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('aboutus')}}">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('contactus')}}">Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('logout')}}">Logout</a></li>
+                        </ul>
+                </div>
+        </nav>   <!-- End Navigation -->
     </header>
     <div class="top-search">
         <div class="container">
@@ -80,7 +104,7 @@
                             <h1 class="m-b-20"><strong>Welcome To <br> Agro Services</strong></h1>
                             <br><p><b>We provide best experience in our website with sleek design and UserInterface</b></p>
  
-                            <p><a class="btn hvr-hover" href="gallery.html">Check It</a></p>
+                            <p><a class="btn hvr-hover" href="{{ url_for('gallery') }}">Check It</a></p>
                         </div>
                     </div>
                 </div>
