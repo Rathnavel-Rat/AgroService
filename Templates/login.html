@@ -78,6 +78,11 @@
                                         <h2>ACCOUNT LOGIN</h2>
                                 </div>
                                 <div class="col-md-12">{{msg}}
+                                    <div class="flashes">
+                                                {% for ms3 in get_flashed_messages()%}
+                                                  <center>{{ ms3 }}
+                                                    {% endfor %}
+                                                </div>
                                     <div class="form-group">
                                         <label for="email"></label><input type="text" placeholder="Your Email" id="email" class="form-control" name="emailaddress"  >
                                         <div class="help-block with-errors"></div>

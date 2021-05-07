@@ -68,8 +68,9 @@ def register():
                         (firstname, emailaddress, phoneno, password))
             mysql.connection.commit()
             cur.close()
-            msg = 'You have successfully registered !'
-            return redirect(url_for('login'))
+            ms3 = 'You have successfully registered !'
+            flash(ms3)
+        return redirect(url_for('login'))
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('register.html', msg=msg)
@@ -108,7 +109,7 @@ def adminmain():
 def adregister():
     if 'loggedin' in session and session['loggedin']:
        return redirect(url_for('adminmain'))
-
+    msg=''
     if request.method == 'POST' and 'password' in request.form and 'emailaddress' in request.form:
         firstname = request.form['firstname']
         emailaddress = request.form['emailaddress']
@@ -129,10 +130,12 @@ def adregister():
                         (firstname, emailaddress, phoneno, password))
             mysql.connection.commit()
             cur.close()
-            return redirect('/admin/' )
+            ms3 = 'You have successfully registered !'
+            flash(ms3)
+            return redirect('/admin/')
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
-    return render_template('adminregister.html')
+    return render_template('adminregister.html', msg=msg)
 
 
 
@@ -142,6 +145,11 @@ def logout():
     session['emailaddress'] = ""
     return redirect(url_for('login'))
 
+@app.route("/adlogout")
+def adlogout():
+    session['loggedin'] = False
+    session['emailaddress'] = ""
+    return redirect(url_for('adlogin'))
 
 @app.route("/aboutus")
 def aboutus():
